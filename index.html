@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Theme Made By www.w3schools.com - No Copyright -->
+  <title>Kalkulator kredytowy</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+  <link href="css/style.css" rel="stylesheet">
+  <script src="js/funkcje.js"></script>
+  <script src="js/BankierDane.js"></script>
+</head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="#Test1">Test 1</a></li>
+        <li><a href="#Test2">Test 2</a></li>
+      </ul>
+	  <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>Kalkulator kredytowy</h1> 
+  <p>porównywarka ofert kredytów hipotecznych</p> 
+  <form>
+    <!--<div class="input-group">
+      <input type="email" class="form-control" size="50" placeholder="Email Address" required>
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-danger">Subscribe</button>
+      </div>
+    </div> -->
+  </form>
+</div>
+
+<!-- Test1 -->
+<div id="Test1" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Test 1, Lorem ipsum dolor sit amet</h2><br>
+      <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      
+	  
+	  <h2>JSON Test</h2>
+	  <button class="btn btn-default btn-lg" id = "btn90_NK">LTV 90% Nowy Klient</button>
+	  <button class="btn btn-default btn-lg" id = "btn90_SK">LTV 90% Stały Klient</button>
+	  <button class="btn btn-default btn-lg" id = "btn80_NK">LTV 80% Nowy Klient</button>
+	  <button class="btn btn-default btn-lg" id = "btn80_SK">LTV 80% Stały Klient</button>
+	  <p id = "test"></p>  
+    </div>
+	
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-signal logo"></span>
+    </div>
+  </div>
+    
+	<div class="container">
+	  <h2>LTV 90% Nowy Klient</h2>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table" id="Table90NK">
+		<thead>
+		  <tr>
+			<th>#</th>
+			<th>Bank</th>
+			<th>Oprocentowanie</th>
+			<th>Marża</th>
+		  </tr>
+		</thead>
+		<tbody>
+		 
+		</tbody>
+	  </table>
+	  </div>
+	</div>
+	
+	<div class="container">
+	  <h2>LTV 90% Stały Klient</h2>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table" id="Table90SK">
+		<thead>
+		  <tr>
+			<th>#</th>
+			<th>Bank</th>
+			<th>Oprocentowanie</th>
+			<th>Marża</th>
+		  </tr>
+		</thead>
+		<tbody>
+		 
+		</tbody>
+	  </table>
+	  </div>
+	</div>
+	
+	<div class="container">
+	  <h2>LTV 80% Nowy Klient</h2>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table" id="Table80NK">
+		<thead>
+		  <tr>
+			<th>#</th>
+			<th>Bank</th>
+			<th>Oprocentowanie</th>
+			<th>Marża</th>
+		  </tr>
+		</thead>
+		<tbody>
+		 
+		</tbody>
+	  </table>
+	  </div>
+	</div>
+	
+	<div class="container">
+	  <h2>LTV 80% Stały Klient</h2>                                                                                      
+	  <div class="table-responsive">          
+	  <table class="table" id="Table80SK">
+		<thead>
+		  <tr>
+			<th>#</th>
+			<th>Bank</th>
+			<th>Oprocentowanie</th>
+			<th>Marża</th>
+		  </tr>
+		</thead>
+		<tbody>
+		 
+		</tbody>
+	  </table>
+	  </div>
+	</div>
+    
+</div>
+
+<div class="container-fluid bg-grey">
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-globe logo slideanim"></span>
+    </div>
+    <div class="col-sm-8">
+      <h2>Our Values</h2><br>
+      <h4><strong>Test:</strong> lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+      <p><strong>Test:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Test2 -->
+<div id="Test2" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Test 2, Lorem ipsum dolor sit amet</h2><br>
+      <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-retweet logo"></span>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+  <p>Tomasz Lisowski</p>
+  <p>Krzysztof Gieroń</p>
+</footer>
+
+<script>
+
+$("#btn90_NK").click(function(){ $("#test").text(Get_LTV90_NK_Banki_JSON()); });
+$("#btn90_SK").click(function(){ $("#test").text(Get_LTV90_SK_Banki_JSON()); });
+$("#btn80_NK").click(function(){ $("#test").text(Get_LTV80_NK_Banki_JSON()); });
+$("#btn80_SK").click(function(){ $("#test").text(Get_LTV80_SK_Banki_JSON()); });
+
+</script>
+</body>
+</html>
