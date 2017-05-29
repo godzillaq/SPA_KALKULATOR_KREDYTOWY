@@ -15,6 +15,8 @@
   <link href="css/style.css" rel="stylesheet">
   <script src="js/funkcje.js"></script>
   <script src="js/BankierDane.js"></script>
+  <script src="js/Baza.js"></script>
+  
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
@@ -33,10 +35,6 @@
         <li><a href="#Test1">Test 1</a></li>
         <li><a href="#Test2">Test 2</a></li>
       </ul>
-	  <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
     </div>
   </div>
 </nav>
@@ -44,15 +42,111 @@
 <div class="jumbotron text-center">
   <h1>Kalkulator kredytowy</h1> 
   <p>porównywarka ofert kredytów hipotecznych</p> 
-  <form>
-    <!--<div class="input-group">
-      <input type="email" class="form-control" size="50" placeholder="Email Address" required>
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-danger">Subscribe</button>
-      </div>
-    </div> -->
-  </form>
+  <p id = "Uz_Nazwa"></p>
+  
+	<!-- Logowanie / Rejestracja -->
+	<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" id = "btnLoginReje">Logowanie / Rejestracja</button>
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<br>
+					<h4 class="modal-title" id="myModalLabel">Kalkulator kredytowy</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-8" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;">
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#Login" data-toggle="tab">Logowanie</a></li>
+								<li><a href="#Registration" data-toggle="tab">Rejestracja</a></li>
+							</ul>
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<br>
+								<div class="tab-pane active" id="Login">
+									<form role="form" class="form-horizontal">
+									<div class="form-group">
+										<label for="lemail" class="col-sm-2 control-label">Email</label>
+										<div class="col-sm-10">
+											<input type="email" class="form-control" id="lemail" placeholder="Email" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="lhaslo" class="col-sm-2 control-label">Hasło</label>
+										<div class="col-sm-10">
+											<input type="password" class="form-control" id="lhaslo" placeholder="Hasło" />
+										</div>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="" id = "lzapamietajdane">Zapamiętaj dane</label>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-2">
+										</div>
+										<div class="col-sm-10">
+											<button type="button" class="btn btn-primary btn-sm" id = "btnLoguj">Zaloguj</button>
+										</div>
+									</div>
+									</form>
+								</div>
+								<div class="tab-pane" id="Registration">
+									<form role="form" class="form-horizontal">
+									<div class="form-group">
+										<label for="rnazwa" class="col-sm-2 control-label">Nazwa</label>
+										<div class="col-sm-10">
+											<input type="text" class="form-control" id="rnazwa" placeholder="Nazwa" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="remail" class="col-sm-2 control-label">Email</label>
+										<div class="col-sm-10">
+											<input type="email" class="form-control" id="remail" placeholder="Email" />
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="rhaslo" class="col-sm-2 control-label">Hasło</label>
+										<div class="col-sm-10">
+											<input type="password" class="form-control" id="rhaslo" placeholder="Hasło" />
+										</div>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="" id = "rzapamietajdane">Zapamiętaj dane</label>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-sm-2">
+										</div>
+										<div class="col-sm-10">
+											<button type="button" class="btn btn-primary btn-sm" id = "btnZarejestruj">Zapisz</button>
+											<button type="button" class="btn btn-default btn-sm" id = "btnAnuluj" data-dismiss="modal">Anuluj</button>
+										</div>
+									</div>
+									</form>
+								</div>
+							</div>
+							
+						</div>
+						<div class="col-md-4">
+							<div class="row text-center sign-with">
+								
+								<img class="img-responsive center-block" src="http://www.medlang.eu/common/img/login.jpg" alt="Chania" width="170" height="170"> 
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+ 
 </div>
+
+
+
+
 
 <!-- Test1 -->
 <div id="Test1" class="container-fluid">
@@ -192,10 +286,16 @@
 
 <script>
 
+
 $("#btn90_NK").click(function(){ $("#test").text(Get_LTV90_NK_Banki_JSON()); });
 $("#btn90_SK").click(function(){ $("#test").text(Get_LTV90_SK_Banki_JSON()); });
 $("#btn80_NK").click(function(){ $("#test").text(Get_LTV80_NK_Banki_JSON()); });
 $("#btn80_SK").click(function(){ $("#test").text(Get_LTV80_SK_Banki_JSON()); });
+
+OdczytajZLS();
+$("#btnZarejestruj").click(function(){Zarejestruj();});
+$("#btnLoguj").click(function(){Zaloguj();});
+
 
 </script>
 </body>
