@@ -9,17 +9,24 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/dataTables.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
 
   <link href="css/style.css" rel="stylesheet">
   <script src="js/funkcje.js"></script>
+	<script src="js/BusinessLogic.js"></script>
   <script src="js/BankierDane.js"></script>
+	<script src="js/ExcelFormulas.js"></script>
   <script src="js/Baza.js"></script>
+	
   
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
+<div id="angularScope" ng-app="myApp" ng-controller="myCtrl">
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -144,8 +151,160 @@
  
 </div>
 
+<form class="form-horizontal">
+<fieldset>
 
+<!-- Form Name -->
+<legend>Form Name</legend>
 
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Kwota kredytu</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="creditAmount">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Wartość nieruchomości</label>  
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="estateValue">
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Czas kredytowania w miesiącach</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="creditTime" ng-options="value.id as value.value for value in creditOptions.availableMonths"></select>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Marża</label>  %
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text"class="form-control input-md" ng-model="spread">
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Prowizja</label>  %
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="commision">
+  </div>
+</div>
+
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="radios">Rodzaj rat</label>
+  <div class="col-md-4">
+  <div class="radio">
+    <label for="radios-0">
+      <input type="radio" name="Rate" id="FixedRate" value="FixedRate" checked="checked" ng-model="installmentType">
+      Stałe
+    </label>
+	</div>
+  <div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="Rate" id="VariableRate" value="VariableRate" ng-model="installmentType">
+      Zmienne
+    </label>
+	</div>
+  </div>
+</div>
+
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="radios">Automatyczne pobieranie stopy procentowej</label>
+  <div class="col-md-4">
+  <div class="radio">
+    <label for="radios-0">
+      <input type="radio" name="InterestRate" id="InterestRateYes" value="InterestRateYes" checked="checked" ng-model="showAutomateRatioParameters">
+      Tak
+    </label>
+	</div>
+  <div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="InterestRate" id="InterestRateNo" value="InterestRateNo" ng-model="showAutomateRatioParameters">
+      Nie
+    </label>
+	</div>
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group" ng-show="showAutomateRatioParameters === 'InterestRateNo'">
+  <label class="col-md-4 control-label" for="textinput">Wartość stopy procentowej</label>  %
+  <div class="col-md-4">
+  <input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="InterestRate">
+  </div>
+</div>
+
+<div id="AutomateRatioParameters" ng-show="showAutomateRatioParameters === 'InterestRateYes'">
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="radios">Waluta kredytu</label>
+  <div class="col-md-4">
+  <div class="radio">
+    <label for="radios-0">
+      <input type="radio" name="Currency" id="WIBOR" value="WIBOR" checked="checked" ng-model="Currency">
+      PLN
+    </label>
+	</div>
+  <div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="Currency" id="EULIBOR" value="EURIBOR" ng-model="Currency">
+      EURO
+    </label>
+	</div>
+	<div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="Currency" id="LIBOR" value="LIBOR" ng-model="Currency">
+      CHF
+    </label>
+	</div>
+  </div>
+</div>
+
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="radios">Okres czasowy dla stopy procentowej</label>
+  <div class="col-md-4">
+  <div class="radio">
+    <label for="radios-0">
+      <input type="radio" name="RateTime" id="1M" value="1M" checked="checked" ng-model="RateTime">
+      1M
+    </label>
+	</div>
+  <div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="RateTime" id="3M" value="3M" ng-model="RateTime">
+      3M
+    </label>
+	</div>
+	<div class="radio">
+    <label for="radios-1">
+      <input type="radio" name="RateTime" id="6M" value="6M" ng-model="RateTime">
+      6M
+    </label>
+	</div>
+  </div>
+</div>
+<!-- Button -->
+
+</div>
+<div class="form-group">
+  <div class="col-md-4 col-md-offset-4">
+    <button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateInstallment()">Oblicz!</button>
+  </div>
+</div>
+</fieldset>
+</form>
+
+<table id="calculationResult" class="display" width="100%"></table>
 
 
 <!-- Test1 -->
@@ -298,5 +457,6 @@ $("#btnLoguj").click(function(){Zaloguj();});
 
 
 </script>
+</div>
 </body>
 </html>
