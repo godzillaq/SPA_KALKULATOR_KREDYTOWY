@@ -3,7 +3,7 @@ CREATE TABLE Uzytkownik
   `id` int NOT NULL AUTO_INCREMENT,
   `Nazwa` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL,
-  `Haslo` varchar(100) DEFAULT NULL,
+  `Haslo` varchar(100) NOT NULL,
   `Aktywny` int NOT NULL,
   PRIMARY KEY (`id`)
 ) 

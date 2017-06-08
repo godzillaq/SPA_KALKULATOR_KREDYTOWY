@@ -72,13 +72,13 @@ function GetObjectFromArrayMeetCondition(array, rateTime, currency){
 
 function GetCorrectUrl(currency) {
   if (currency === "WIBOR") {
-    return "http://localhost/rates.php";
+    return "http://localhost/api/rates.php";
   }
   else if (currency === "LIBOR") {
-    return "http://localhost/rateschf.php";
+    return "http://localhost/api/rateschf.php";
   }
   else if (currency === "EURIBOR") {
-    return "http://localhost/rateseur.php";
+    return "http://localhost/api/rateseur.php";
   }
 }
 
