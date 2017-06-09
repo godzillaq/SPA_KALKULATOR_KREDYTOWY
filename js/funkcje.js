@@ -1,6 +1,8 @@
 var calculationResultTable;
 var calculationSummaryTable;
 var detailsChart;
+var globalSchedule = [];
+var globalCreditSummary = [];
 
 (function () {
   var app = angular.module('myApp', []);
@@ -22,9 +24,11 @@ var detailsChart;
     $scope.showAutomateRatioParameters = "InterestRateYes";
     $scope.Currency = "PLN";
     $scope.RateTime = "RateTime3M";
+	$scope.btnPDFSHow = false;
 
     $scope.calculateInstallment = function () {
       var interestRate;
+	  $scope.btnPDFSHow = false;
       if ($scope.showAutomateRatioParameters === "InterestRateYes") {
         interestRate = GetInterestRateFromApi($scope.RateTime, $scope.Currency);
       }
@@ -50,7 +54,17 @@ var detailsChart;
       DrawRemainingCapitalInTimeChart(remainingCapitalInTime, labels);
       var creditSummary = GetCreditSummary($scope.creditAmount, schedule, $scope.commision, $scope.spread, interestRate, $scope.estateValue);
       drawCalculationSummaryTable(creditSummary);
+	  //
+	  globalSchedule = schedule;
+	  globalCreditSummary = creditSummary;
+	  $scope.btnPDFSHow = true;
     };
+	
+	$scope.PrintToPdf = function () 
+	{
+	  PrintPDF();	 	
+	}
+		
 
 
   });
