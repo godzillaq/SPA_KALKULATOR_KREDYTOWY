@@ -25,7 +25,9 @@ var globalCreditSummary = [];
     $scope.Currency = "PLN";
     $scope.RateTime = "RateTime3M";
 	$scope.btnPDFSHow = false;
-
+	
+	OdczytajParametry();
+	
     $scope.calculateInstallment = function () {
       var interestRate;
 	  $scope.btnPDFSHow = false;
@@ -64,9 +66,15 @@ var globalCreditSummary = [];
 	{
 	  PrintPDF();	 	
 	}
-		
-
-
+	$scope.DBLogowanie = function () 
+	{
+	  Zaloguj(); 
+	}
+	$scope.SaveParameters = function () 
+	{	
+	  if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();	
+	  else DBZapiszParametryKW();	
+	}
   });
 })();//<-- here
 
@@ -363,6 +371,19 @@ function drawCalculationSummaryTable(tableData) {
       { "className": "dt-center", "targets": "_all" }
     ]
   });
+}
+
+function OdczytajParametry()
+{
+	if (localStorage.getItem("email") != null && localStorage.getItem("haslo") != null && localStorage.email != '' && localStorage.haslo != '')
+	{
+		$("#lemail").val(localStorage.email);
+		$("#lhaslo").val(localStorage.haslo);
+		Zaloguj(localStorage.email, localStorage.haslo);
+	}
+	
+	if (Identyfikator_uzytkownik == -1) OdczytajZLS();
+	else DBOdczytajParametryKW();
 }
 
 

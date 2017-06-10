@@ -7,3 +7,21 @@ CREATE TABLE Uzytkownik
   `Aktywny` int NOT NULL,
   PRIMARY KEY (`id`)
 ) 
+
+CREATE TABLE Parametry
+(
+  id int,
+  KwotaKredytu varchar(100),
+  WartoscNieruchomosci varchar(100),
+  CzasKredytowaniaWMiesiacach varchar(100),  
+  Marza varchar(100),  
+  Prowizja varchar(100),
+  RodzajRat varchar(100),
+  AutoPobieraniStopProc varchar(100),
+  WalutaKredytu varchar(100),
+  OkresCzasowyStopProc varchar(100),
+  WartoscStopProc varchar(100),
+   INDEX par_ind (id),
+    FOREIGN KEY (id)
+        REFERENCES uzytkownik(id)
+)
