@@ -34,6 +34,10 @@
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
 
 	<div id="angularScope" ng-app="myApp" ng-controller="myCtrl">
+		<div id="toHighLtvAlert" class="alert alert-warning notification" role="alert" style="display: none">
+			<strong>Zbyt wysoki wskaźnik LTV!</strong> Zwiększ wartość nieruchomości i/lub zmniejsz kwotę kredytu.
+		</div>
+
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -161,7 +165,7 @@
 		<div style="width: 60%; margin: 0 auto">
 			<div id="content">
 				<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-					<li><a href="#orange" data-toggle="tab">Kalkulacja wg własnych danych</a>
+					<li class="active"><a href="#orange" data-toggle="tab" aria-expanded="true">Kalkulacja wg własnych danych</a>
 					</li>
 					<li><a href="#yellow" data-toggle="tab">Porównywanie kredytów</a>
 					</li>
@@ -322,9 +326,9 @@
 					</form>
 					<table id="calculationSummary" class="display"></table>
 		<table id="calculationResult" class="display"></table>
-
 		<canvas id="installmentDetailsChart"></canvas>
 		<canvas id="remainingCapitalInTimeChart"></canvas>
+
 				</div>
 				<div class="tab-pane" id="yellow">
 					<form class="form-horizontal">
@@ -357,10 +361,11 @@
 							<!-- Button -->
 							<div class="form-group">
 								<div class="col-md-4 col-md-offset-4">
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateInstallment()">Porównaj!</button>
+									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="CompareCreditOffers()">Porównaj!</button>
 								</div>
 						</fieldset>
 					</form>
+					<table id="comparisonResult" class="display"></table>
 					</div>
 				</div>
 

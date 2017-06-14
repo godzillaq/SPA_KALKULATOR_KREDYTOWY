@@ -1,10 +1,13 @@
 var calculationResultTable;
+var comparisonResultTable;
 var calculationSummaryTable;
 var detailsChart;
 var globalSchedule = [];
 var globalCreditSummary = [];
 
 (function () {
+
+
   var app = angular.module('myApp', []);
 
   app.controller('myCtrl', function () {
@@ -23,14 +26,29 @@ var globalCreditSummary = [];
 
     $scope.showAutomateRatioParameters = "InterestRateYes";
     $scope.Currency = "PLN";
-    $scope.RateTime = "RateTime3M";
-	$scope.btnPDFSHow = false;
-	
-	OdczytajParametry();
-	
+    $scope.RateTime = "3M";
+    $scope.installmentType = "FixedRate";
+    $scope.Currency = "WIBOR";
+    $scope.creditAmount = 123000;
+    $scope.estateValue = 200000;
+    $scope.creditTime = 360;
+    $scope.btnPDFSHow = false;
+$scope.commision = "1";
+$scope.spread = "2";
+    $scope.getPercentage = function (a) {
+      return a;
+    }
+
+    OdczytajParametry();
+    $scope.CompareCreditOffers = function () {
+      var comparedCredits = CompareCreditOffers($scope.creditAmount, $scope.estateValue, $scope.creditTime);
+      drawComparisonResultTable(comparedCredits);
+    }
+
+
     $scope.calculateInstallment = function () {
       var interestRate;
-	  $scope.btnPDFSHow = false;
+      $scope.btnPDFSHow = false;
       if ($scope.showAutomateRatioParameters === "InterestRateYes") {
         interestRate = GetInterestRateFromApi($scope.RateTime, $scope.Currency);
       }
@@ -40,11 +58,15 @@ var globalCreditSummary = [];
       var schedule;
       if ($scope.installmentType === "FixedRate") {
         schedule = calculateFixedInstallmentSchedule(parseFloat($scope.creditAmount), (parseFloat($scope.spread) + parseFloat(interestRate)) / 100, $scope.creditTime);
-        drawCalculationResultTable(schedule);
+        scheduleWithPLN = AddPLNToEachCell(schedule);
+        
+        drawCalculationResultTable(scheduleWithPLN);
       }
       else if ($scope.installmentType === "VariableRate") {
         schedule = calculateVariableInstallmentSchedule(parseFloat($scope.creditAmount), (parseFloat($scope.spread) + parseFloat(interestRate)) / 100, $scope.creditTime);
-        drawCalculationResultTable(schedule);
+        scheduleWithPLN = AddPLNToEachCell(schedule);
+
+        drawCalculationResultTable(scheduleWithPLN);
       }
       var interestsInTime = GetInterestsInTime(schedule);
       var capitalInTime = GetCapitalInTime(schedule);
@@ -56,27 +78,39 @@ var globalCreditSummary = [];
       DrawRemainingCapitalInTimeChart(remainingCapitalInTime, labels);
       var creditSummary = GetCreditSummary($scope.creditAmount, schedule, $scope.commision, $scope.spread, interestRate, $scope.estateValue);
       drawCalculationSummaryTable(creditSummary);
-	  //
-	  globalSchedule = schedule;
-	  globalCreditSummary = creditSummary;
-	  $scope.btnPDFSHow = true;
+      globalSchedule = schedule;
+      globalCreditSummary = creditSummary;
+      $scope.btnPDFSHow = true;
     };
-	
-	$scope.PrintToPdf = function () 
-	{
-	  PrintPDF();	 	
-	}
-	$scope.DBLogowanie = function () 
-	{
-	  Zaloguj(); 
-	}
-	$scope.SaveParameters = function () 
-	{	
-	  if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();	
-	  else DBZapiszParametryKW();	
-	}
+
+    $scope.PrintToPdf = function () {
+      PrintPDF();
+    }
+    $scope.DBLogowanie = function () {
+      Zaloguj();
+    }
+    $scope.SaveParameters = function () {
+      if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();
+      else DBZapiszParametryKW();
+    }
   });
+  $('.nav-tabs a[href="#orange"]').tab('show');
 })();//<-- here
+
+function AddPLNToEachCell(array){
+  var resultArray = [];
+
+  array.forEach(function(x){
+    resultArray.push({
+      0: x[0],
+      1: x[1] + " PLN",
+    2: x[2] + " PLN",
+    3: x[3] + " PLN",
+    4: x[4] + " PLN"
+    });
+  });
+  return resultArray;
+}
 
 function GetInstallmentsInTime(schedule) {
   var installmentsInTime = [];
@@ -113,22 +147,16 @@ function GetRemainingCapitalInTime(schedule) {
 function GenerateLablesForChart(arrayInTime) {
   var labels = [];
   for (var i = 1; i <= arrayInTime.length; i++) {
-    // if (i === 1 || i%5 == 0 || i === arrayInTime.length){
     labels.push(i.toString());
-    // }
-    //  else {
-    //    labels.push("");
-    //  }
-
   }
   return labels;
 }
 
 function DrawInstallmentDetailsChart(interestsInTime, capitalInTime, installmentsInTime, remainingCapitalInTime, labels) {
   var ctx = document.getElementById('installmentDetailsChart').getContext('2d');
-if (detailsChart != undefined){
-  detailsChart.destroy();
-}
+  if (detailsChart != undefined) {
+    detailsChart.destroy();
+  }
 
   detailsChart = new Chart(ctx, {
     type: 'line',
@@ -160,9 +188,7 @@ if (detailsChart != undefined){
     options: {
       responsive: true,
 
-// Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-
-maintainAspectRatio: true,
+      maintainAspectRatio: true,
       scales: {
         yAxes: [{
           position: "left",
@@ -201,7 +227,7 @@ function GetCreditSummary(amount, schedule, commissionPercent, spread, interestR
   var creditAmount = parseFloat(amount);
   var commisionToPay = Math.round(parseFloat(amount) * ((parseFloat(commissionPercent) / 100) * 100)) / 100;
   var creditRate = parseFloat(spread) + parseFloat(interestRate);
-  var ltv = Math.round(parseFloat(amount) / parseFloat(estateValue) * 100);
+  var ltv = Math.round((parseFloat(amount) / parseFloat(estateValue) * 1000)) / 10;
   schedule.forEach(function (element) {
     sumToPay += element[1];
     sumInterestsToPay += element[3];
@@ -209,12 +235,12 @@ function GetCreditSummary(amount, schedule, commissionPercent, spread, interestR
   var sumToPay = Math.round((creditAmount + sumInterestsToPay + commisionToPay) * 100) / 100;
 
   result.push({
-    0: creditAmount,
-    1: sumToPay,
-    2: sumInterestsToPay,
-    3: commisionToPay,
-    4: creditRate,
-    5: ltv
+    0: creditAmount + " PLN",
+    1: sumToPay + " PLN",
+    2: Math.round(sumInterestsToPay * 100) / 100 + " PLN",
+    3: commisionToPay + " PLN",
+    4: creditRate + "%",
+    5: ltv + "%"
   });
 
   return result;
@@ -230,7 +256,6 @@ function GetInterestRateFromApi(rateTime, currency) {
     async: false
   }).done(function (x) {
     response = JSON.parse(x);
-
   });
   var a = GetObjectFromArrayMeetCondition(response, rateTime, currency);
   return parseFloat(a.value.replace(/ *\([^)]*\) */g, "").replace(/,/, "."));
@@ -272,7 +297,7 @@ function calculateVariableInstallmentSchedule(amount, rate, months) {
 
     installmentsDetails.push({
       0: i,
-      1: Math.round((capital + interests) * 100) / 100,
+      1: Math.round((capital + interests) * 100) / 100 ,
       2: Math.round(capital * 100) / 100,
       3: Math.round(interests * 100) / 100,
       4: Math.round(remainingAmount * 100) / 100,
@@ -287,21 +312,12 @@ function calculateFixedInstallmentSchedule(amount, rate, months) {
   var installmentsDetails = [];
   var installment = -ExcelFormulas.PMT(rate / 12, months, amount);
 
-  // for (var i = 1; i <= months; i++) {
-  //   installmentsDetails.push({ 
-  //     installmentNumber: i, 
-  //     installmentSum: installment, 
-  //     capital: -ExcelFormulas.PPMT(rate/12, i, months, amount, 0, 0), 
-  //     interests: -(-installment - ExcelFormulas.PPMT(rate/12, i, months, amount, 0, 0)),
-  //     remainingAmount: i === 1 ? amount + ExcelFormulas.PPMT(rate/12, i, months, amount, 0, 0) : installmentsDetails[i-2].remainingAmount + ExcelFormulas.PPMT(rate/12, i, months, amount, 0, 0)  });
-  // }
-
   for (var i = 1; i <= months; i++) {
     var previousAmount = i === 1 ? amount : installmentsDetails[i - 2][4];
     var remainingAmount = i === 1 ? amount + ExcelFormulas.PPMT(rate / 12, i, months, amount, 0, 0) : installmentsDetails[i - 2][4] + ExcelFormulas.PPMT(rate / 12, i, months, amount, 0, 0);
     installmentsDetails.push({
       0: i,
-      1: Math.round(installment * 100) / 100,
+      1: Math.round(installment * 100) / 100 ,
       2: i === months ? Math.round(previousAmount * 100) / 100 : Math.round(-ExcelFormulas.PPMT(rate / 12, i, months, amount, 0, 0) * 100) / 100,
       3: Math.round(-(-installment - ExcelFormulas.PPMT(rate / 12, i, months, amount, 0, 0)) * 100) / 100,
       4: i === months ? 0 : Math.round(remainingAmount * 100) / 100,
@@ -309,6 +325,34 @@ function calculateFixedInstallmentSchedule(amount, rate, months) {
   }
 
   return installmentsDetails;
+}
+
+function drawComparisonResultTable(tableData) {
+  if (comparisonResultTable !== undefined) {
+    comparisonResultTable.destroy();
+  }
+
+  comparisonResultTable = $('#comparisonResult').DataTable({
+    data: tableData,
+    columns: [
+      { title: "Lp." },
+      { title: "Bank" },
+      { title: "Rata" },
+      { title: "Całkowita kwota do spłaty" }
+    ],
+    "language": {
+      "lengthMenu": "Wyświetl _MENU_ rekordów na stronę",
+      "zeroRecords": "Nic nie znaleziono",
+      "info": "Pokazywanie strony _PAGE_ z _PAGES_",
+      "infoEmpty": "Brak rekordów",
+      "infoFiltered": "(filtered from _MAX_ total records)",
+      "search": "Szukaj"
+    },
+    searching: false,
+    "columnDefs": [
+      { "className": "dt-center", "targets": "_all" }
+    ]
+  });
 }
 
 function drawCalculationResultTable(tableData) {
@@ -319,7 +363,7 @@ function drawCalculationResultTable(tableData) {
   calculationResultTable = $('#calculationResult').DataTable({
     data: tableData,
     columns: [
-      { title: "Nr raty" },
+      { title: "" },
       { title: "Rata" },
       { title: "Kapitał" },
       { title: "Odsetki" },
@@ -373,17 +417,78 @@ function drawCalculationSummaryTable(tableData) {
   });
 }
 
-function OdczytajParametry()
-{
-	if (localStorage.getItem("email") != null && localStorage.getItem("haslo") != null && localStorage.email != '' && localStorage.haslo != '')
-	{
-		$("#lemail").val(localStorage.email);
-		$("#lhaslo").val(localStorage.haslo);
-		Zaloguj(localStorage.email, localStorage.haslo);
-	}
-	
-	if (Identyfikator_uzytkownik == -1) OdczytajZLS();
-	else DBOdczytajParametryKW();
+function OdczytajParametry() {
+  if (localStorage.getItem("email") != null && localStorage.getItem("haslo") != null && localStorage.email != '' && localStorage.haslo != '') {
+    $("#lemail").val(localStorage.email);
+    $("#lhaslo").val(localStorage.haslo);
+    Zaloguj(localStorage.email, localStorage.haslo);
+  }
+
+  if (Identyfikator_uzytkownik == -1) OdczytajZLS();
+  else DBOdczytajParametryKW();
+}
+
+
+function CompareCreditOffers(creditAmount, estateValue, months) {
+  var offers = GetCreditOffersFromAPI();
+  var ltv = parseFloat(creditAmount) / parseFloat(estateValue);
+  if (ltv > 0.9) {
+    $("#toHighLtvAlert").fadeTo(5000, 500).slideUp(500, function () {
+      $(".alert").slideUp(500);
+    });
+  }
+  var bankOffers;
+  if (ltv <= 0.90 && ltv >= 0.80) {
+    offers.filter(function (obj) {
+      if (obj.Nazwa === "LTV90NK") {
+        bankOffers = obj;
+      }
+    });
+  }
+  else if (ltv <= 0.80) {
+    offers.filter(function (obj) {
+      if (obj.Nazwa === "LTV80NK") {
+        bankOffers = obj;
+      }
+    });
+  }
+  
+  var finalResults = [];
+  bankOffers.Dane.forEach(function(x) {
+    
+    var interestRate = GetInterestRateFromApi("3M", "WIBOR");
+    var spread = x.Marza.replace('%', '').replace(',' ,'.');
+    var schedule = calculateFixedInstallmentSchedule(creditAmount, Math.round((interestRate + parseFloat(spread))*100)/100/100, months);
+    var summary = GetCreditSummary(creditAmount, schedule, 0, parseFloat(spread), interestRate, estateValue);
+    finalResults.push({1: x.Bank.trim().replace(/\*/g, ''), 2: schedule[0][1], 3: summary[0][1]});
+
+    
+});
+var sortedResults = SortResults(finalResults);
+var lp = 1;
+sortedResults.forEach(function(x){
+  x[0] = lp;
+  lp++;
+});
+   return sortedResults;
+}
+
+function SortResults(array){
+  return array.sort(function(a, b) {
+    return parseFloat(a[2]) - parseFloat(b[2]);
+  });
+}
+
+function GetCreditOffersFromAPI() {
+  var response;
+  var currencyJson = $.ajax({
+    url: "http://localhost/spa/api/bankierKH.php",
+    context: document.body,
+    async: false
+  }).done(function (x) {
+    response = JSON.parse(x);
+  });
+  return response;
 }
 
 
