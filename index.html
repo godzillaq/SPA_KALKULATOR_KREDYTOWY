@@ -165,16 +165,16 @@
 		<div style="width: 60%; margin: 0 auto">
 			<div id="content">
 				<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-					<li class="active"><a href="#orange" data-toggle="tab" aria-expanded="true">Kalkulacja wg własnych danych</a>
+					<li class="active"><a href="#calculationTab" data-toggle="tab" aria-expanded="true">Kalkulacja wg własnych danych</a>
 					</li>
-					<li><a href="#yellow" data-toggle="tab">Porównywanie kredytów</a>
+					<li><a href="#comparisonTab" data-toggle="tab">Porównywanie kredytów</a>
 					</li>
 				</ul>
 			</div>
 			<div id="my-tab-content" class="tab-content">
-				<div class="tab-pane active" id="orange">
+				<div class="tab-pane active" id="calculationTab">
 					<form class="form-horizontal">
-						<fieldset>
+						<fieldset class="calculationTabClass">
 
 							<!-- Text input-->
 							<div class="form-group">
@@ -229,7 +229,7 @@
 									<div class="radio">
 										<label for="radios-1">
       <input type="radio" name="Rate" id="VariableRate" value="VariableRate" ng-model="installmentType">
-      Zmienne
+      Malejące
     </label>
 									</div>
 								</div>
@@ -324,15 +324,42 @@
 							</div>
 						</fieldset>
 					</form>
-					<table id="calculationSummary" class="display"></table>
-		<table id="calculationResult" class="display"></table>
-		<canvas id="installmentDetailsChart"></canvas>
-		<canvas id="remainingCapitalInTimeChart"></canvas>
+					<div id="resultContainer" ng-show="resultContainerShow">
+					<div id="content">
+						<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+							<li class="active"><a href="#summaryTab" data-toggle="tab" aria-expanded="true">Podsumowanie</a>
+							</li>
+							<li><a href="#scheduleTab" data-toggle="tab">Harmonogram</a>
+							<li><a href="#installmentTab" data-toggle="tab">Wykres rat</a>
+							<li><a href="#capitalTab" data-toggle="tab">Wykres kapitału</a>
+							<li><a href="#differentRatesTab" data-toggle="tab" ng-show="installmentType === 'FixedRate'">Raty dla zmiennych stóp</a>
+							</li>
+						</ul>
+					</div>
 
-				</div>
-				<div class="tab-pane" id="yellow">
+					<div id="my-tab-content" class="tab-content">
+						<div class="tab-pane" id="summaryTab">
+							<table id="calculationSummary" class="display"></table>
+							</div>
+						<div class="tab-pane" id="scheduleTab">
+							<table id="calculationResult" class="display"></table>
+							<div id="benefitCalculationButton" style="text-align: right;"></div>
+							</div>
+						<div class="tab-pane" id="installmentTab">
+							<canvas id="installmentDetailsChart"></canvas>
+							</div>
+						<div class="tab-pane" id="capitalTab">
+							<canvas id="remainingCapitalInTimeChart"></canvas>
+							</div>
+						<div class="tab-pane" id="differentRatesTab">
+							<table id="installmentsDifferentRates" class="display"></table>
+							</div>
+		</div>
+</div>
+		</div>
+				<div class="tab-pane" id="comparisonTab">
 					<form class="form-horizontal">
-						<fieldset>
+						<fieldset class="calculationTabClass">
 
 							<!-- Text input-->
 							<div class="form-group">

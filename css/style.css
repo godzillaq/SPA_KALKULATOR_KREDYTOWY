@@ -184,3 +184,7 @@ body {
       right: 15px;
 	  z-index: 10000;
     }
+	
+	.calculationTabClass {
+		padding-top: 15px;
+	}
