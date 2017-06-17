@@ -333,7 +333,7 @@ function GetInterestRateFromApi(rateTime, currency) {
     response = JSON.parse(x);
   });
   var a = GetObjectFromArrayMeetCondition(response, rateTime, currency);
-  return parseFloat(a.value.replace(/ *\([^)]*\) */g, "").replace(/,/, "."));
+  return Math.round(parseFloat(a.value.replace(/ *\([^)]*\) */g, "").replace(/,/, "."))*100) / 100;
 }
 
 function GetObjectFromArrayMeetCondition(array, rateTime, currency) {
