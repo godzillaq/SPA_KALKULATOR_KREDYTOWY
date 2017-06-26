@@ -27,8 +27,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.2/jspdf.plugin.autotable.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
 
-
-
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
@@ -50,8 +48,7 @@
 				</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-left">
-						<li><a href="#Test1">Test 1</a></li>
-						<li><a href="#Test2">Test 2</a></li>
+						
 					</ul>
 				</div>
 			</div>
@@ -319,7 +316,7 @@
 								<div class="col-md-4 col-md-offset-4">
 									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateInstallment()">Oblicz!</button>
 									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParameters()">Zapisz parametry</button>
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="PrintToPdf()" ng-show="btnPDFSHow">Zapisz do pdf</button>
+									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="PrintToPdfWgWlasnychDanych()" ng-show="btnPDFSHow">Zapisz do pdf</button>
 								</div>
 							</div>
 						</fieldset>
@@ -389,6 +386,8 @@
 							<div class="form-group">
 								<div class="col-md-4 col-md-offset-4">
 									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="CompareCreditOffers()">Porównaj!</button>
+									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParametersWgApi()">Zapisz parametry</button>
+									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="PrintToPdfWgDanychApi()" ng-show="btnPDFSHowWgDanychApi">Zapisz do pdf</button>
 								</div>
 						</fieldset>
 					</form>
@@ -403,149 +402,6 @@
 		
 	</div>
 
-
-	<!-- Test1 -->
-	<div id="Test1" class="container-fluid">
-		<div class="row">
-			<div class="col-sm-8">
-				<h2>Test 1, Lorem ipsum dolor sit amet</h2><br>
-				<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur
-					sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing
-					elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-					ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-
-				<h2>JSON Test</h2>
-				<button class="btn btn-default btn-lg" id="btn90_NK">LTV 90% Nowy Klient</button>
-				<button class="btn btn-default btn-lg" id="btn90_SK">LTV 90% Stały Klient</button>
-				<button class="btn btn-default btn-lg" id="btn80_NK">LTV 80% Nowy Klient</button>
-				<button class="btn btn-default btn-lg" id="btn80_SK">LTV 80% Stały Klient</button>
-				<p id="test"></p>
-			</div>
-
-			<div class="col-sm-4">
-				<span class="glyphicon glyphicon-signal logo"></span>
-			</div>
-		</div>
-
-		<div class="container">
-			<h2>LTV 90% Nowy Klient</h2>
-			<div class="table-responsive">
-				<table class="table" id="Table90NK">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Bank</th>
-							<th>Oprocentowanie</th>
-							<th>Marża</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="container">
-			<h2>LTV 90% Stały Klient</h2>
-			<div class="table-responsive">
-				<table class="table" id="Table90SK">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Bank</th>
-							<th>Oprocentowanie</th>
-							<th>Marża</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="container">
-			<h2>LTV 80% Nowy Klient</h2>
-			<div class="table-responsive">
-				<table class="table" id="Table80NK">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Bank</th>
-							<th>Oprocentowanie</th>
-							<th>Marża</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-		<div class="container">
-			<h2>LTV 80% Stały Klient</h2>
-			<div class="table-responsive">
-				<table class="table" id="Table80SK">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Bank</th>
-							<th>Oprocentowanie</th>
-							<th>Marża</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="container-fluid bg-grey">
-		<div class="row">
-			<div class="col-sm-4">
-				<span class="glyphicon glyphicon-globe logo slideanim"></span>
-			</div>
-			<div class="col-sm-8">
-				<h2>Our Values</h2><br>
-				<h4><strong>Test:</strong> lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat.</h4><br>
-				<p><strong>Test:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-					magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-			</div>
-		</div>
-	</div>
-
-	<!-- Test2 -->
-	<div id="Test2" class="container-fluid">
-		<div class="row">
-			<div class="col-sm-8">
-				<h2>Test 2, Lorem ipsum dolor sit amet</h2><br>
-				<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur
-					sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing
-					elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-					ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-			</div>
-			<div class="col-sm-4">
-				<span class="glyphicon glyphicon-retweet logo"></span>
-			</div>
-		</div>
-	</div>
-
 	<footer class="container-fluid text-center">
 		<a href="#myPage" title="To Top">
 			<span class="glyphicon glyphicon-chevron-up"></span>
@@ -555,12 +411,6 @@
 	</footer>
 
 	<script>
-		$("#btn90_NK").click(function () { $("#test").text(Get_LTV90_NK_Banki_JSON()); });
-		$("#btn90_SK").click(function () { $("#test").text(Get_LTV90_SK_Banki_JSON()); });
-		$("#btn80_NK").click(function () { $("#test").text(Get_LTV80_NK_Banki_JSON()); });
-		$("#btn80_SK").click(function () { $("#test").text(Get_LTV80_SK_Banki_JSON()); });
-
-		//OdczytajZLS();
 		$("#btnZarejestruj").click(function () { Zarejestruj(); });
 		
 

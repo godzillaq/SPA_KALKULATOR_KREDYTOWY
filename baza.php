@@ -56,7 +56,7 @@
 		$conn = mysqli_connect("localhost", "root", "", "test");
 		$sql = "delete from parametry where id = "; $sql .= $obj->{'userId'};
 		mysqli_query($conn, $sql);
-		$sql = "insert into parametry(id, KwotaKredytu, WartoscNieruchomosci, CzasKredytowaniaWMiesiacach, Marza, Prowizja, RodzajRat, AutoPobieraniStopProc, WalutaKredytu, OkresCzasowyStopProc, WartoscStopProc)";
+		$sql = "insert into parametry(id, KwotaKredytu, WartoscNieruchomosci, CzasKredytowaniaWMiesiacach, Marza, Prowizja, RodzajRat, AutoPobieraniStopProc, WalutaKredytu, OkresCzasowyStopProc, WartoscStopProc, TypDanych)";
 		$sql .= "VALUES("; $sql .= $obj->{'userId'}; $sql .= ", ";
 		$sql .= "'"; $sql .= $obj->{'KwotaKredytu'}; $sql .= "', ";
 		$sql .= "'"; $sql .= $obj->{'WartoscNieruchomosci'}; $sql .= "', ";
@@ -67,7 +67,8 @@
 		$sql .= "'"; $sql .= $obj->{'AutoPobieraniStopProc'}; $sql .= "', "; 
 		$sql .= "'"; $sql .= $obj->{'WalutaKredytu'}; $sql .= "', ";
 		$sql .= "'"; $sql .= $obj->{'OkresCzasowyStopProc'}; $sql .= "', ";
-		$sql .= "'"; $sql .= $obj->{'WartoscStopProc'}; $sql .= "')";
+		$sql .= "'"; $sql .= $obj->{'WartoscStopProc'}; $sql .= "', "; 
+		$sql .= "'"; $sql .= $obj->{'TypDanych'}; $sql .= "')";		
 		mysqli_query($conn, $sql);
 		echo $sql;
  }	
@@ -75,7 +76,7 @@
 if ($operacja == "GetParamsKW")
 {
 	$userId=$_POST['userId_'];
-	$result = mysql_query("SELECT KwotaKredytu, WartoscNieruchomosci, CzasKredytowaniaWMiesiacach, Marza, Prowizja, RodzajRat, AutoPobieraniStopProc, WalutaKredytu, OkresCzasowyStopProc, WartoscStopProc from parametry where id = $userId");
+	$result = mysql_query("SELECT KwotaKredytu, WartoscNieruchomosci, CzasKredytowaniaWMiesiacach, Marza, Prowizja, RodzajRat, AutoPobieraniStopProc, WalutaKredytu, OkresCzasowyStopProc, WartoscStopProc, TypDanych from parametry where id = $userId");
 	$data = mysql_num_rows($result);
 	if ($data == 0) echo -1;
 	else
@@ -85,7 +86,7 @@ if ($operacja == "GetParamsKW")
 			$obj = (object) ['KwotaKredytu' => $row["KwotaKredytu"], 'WartoscNieruchomosci' => $row["WartoscNieruchomosci"], 
 			'CzasKredytowaniaWMiesiacach' => $row["CzasKredytowaniaWMiesiacach"], 'Marza' => $row["Marza"],
 			'Prowizja' => $row["Prowizja"], 'RodzajRat' => $row["RodzajRat"], 'AutoPobieraniStopProc' => $row["AutoPobieraniStopProc"], 
-			'WalutaKredytu' => $row["WalutaKredytu"], 'OkresCzasowyStopProc' => $row["OkresCzasowyStopProc"], 'WartoscStopProc' => $row["WartoscStopProc"]];
+			'WalutaKredytu' => $row["WalutaKredytu"], 'OkresCzasowyStopProc' => $row["OkresCzasowyStopProc"], 'WartoscStopProc' => $row["WartoscStopProc"], 'TypDanych' => $row["TypDanych"]];
 			echo json_encode($obj);
 		}
 	}

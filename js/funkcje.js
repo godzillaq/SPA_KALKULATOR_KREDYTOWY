@@ -6,13 +6,16 @@ var capitalInTimeChart;
 var detailsChart;
 var globalSchedule = [];
 var globalCreditSummary = [];
+var globalInstallmentsDifferentRates = [];
+var globalComparedCredits = [];
+var TypDanych = 0;
 
 (function () {
 
 
   var app = angular.module('myApp', []);
 
-  app.controller('myCtrl', function ($scope, $compile) {
+  app.controller('myCtrl', function ($compile) {
     $scope = angular.element('[ng-controller=myCtrl]').scope();
     $scope.creditOptions = {};
     $scope.creditOptions.availableMonthsSelect = { "selected": [] };
@@ -35,6 +38,7 @@ var globalCreditSummary = [];
     $scope.estateValue = 200000;
     $scope.creditTime = 360;
     $scope.btnPDFSHow = false;
+	$scope.btnPDFSHowWgDanychApi = false;
     $scope.resultContainerShow = false;
     $scope.commision = "1";
     $scope.spread = "2";
@@ -42,10 +46,12 @@ var globalCreditSummary = [];
       return a;
     }
 
-    OdczytajParametry();
+    OdczytajParametry(false); 
     $scope.CompareCreditOffers = function () {
       var comparedCredits = CompareCreditOffers($scope.creditAmount, $scope.estateValue, $scope.creditTime);
       drawComparisonResultTable(comparedCredits);
+	  globalComparedCredits = comparedCredits;
+	  $scope.btnPDFSHowWgDanychApi = true;
     }
 
     $scope.calculateInstallment = function () {
@@ -92,6 +98,7 @@ var globalCreditSummary = [];
 
       globalSchedule = schedule;
       globalCreditSummary = creditSummary;
+	  globalInstallmentsDifferentRates = transformArrayToArrayOfObject(installmentsForDifferentRates);
       $scope.btnPDFSHow = true;
       $scope.resultContainerShow = true;
       $("#resultContainer").show();
@@ -145,16 +152,26 @@ var globalCreditSummary = [];
 
     }
 
-    $scope.PrintToPdf = function () {
-      PrintPDF();
+    $scope.PrintToPdfWgWlasnychDanych = function () {
+      PrintPDF(0);
     }
+	$scope.PrintToPdfWgDanychApi = function () {
+      PrintPDF(1);
+    }	
     $scope.DBLogowanie = function () {
       Zaloguj();
     }
     $scope.SaveParameters = function () {
+	  TypDanych = 0;
       if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();
       else DBZapiszParametryKW();
     }
+	$scope.SaveParametersWgApi = function () {
+	  TypDanych = 1;
+      if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();
+      else DBZapiszParametryKW();
+    }
+	
   });
   $('.nav-tabs a[href="#orange"]').tab('show');
 })();//<-- here
@@ -641,15 +658,16 @@ function drawInstallmentsDifferentRatesTable(tableData) {
   });
 }
 
-function OdczytajParametry() {
+function OdczytajParametry(odczytajParametry = true) {
   if (localStorage.getItem("email") != null && localStorage.getItem("haslo") != null && localStorage.email != '' && localStorage.haslo != '') {
     $("#lemail").val(localStorage.email);
     $("#lhaslo").val(localStorage.haslo);
-    Zaloguj(localStorage.email, localStorage.haslo);
+    Zaloguj(localStorage.email, localStorage.haslo, odczytajParametry);
   }
+  else OdczytajZLS();
 
-  if (Identyfikator_uzytkownik == -1) OdczytajZLS();
-  else DBOdczytajParametryKW();
+  //if (Identyfikator_uzytkownik == -1) OdczytajZLS();
+  //else DBOdczytajParametryKW();
 }
 
 
@@ -708,7 +726,7 @@ function SortResults(array) {
 function GetCreditOffersFromAPI() {
   var response;
   var currencyJson = $.ajax({
-    url: "http://localhost/spa/api/bankierKH.php",
+    url: "http://localhost/api/bankierKH.php",
     context: document.body,
     async: false
   }).done(function (x) {

@@ -21,6 +21,7 @@ CREATE TABLE Parametry
   WalutaKredytu varchar(100),
   OkresCzasowyStopProc varchar(100),
   WartoscStopProc varchar(100),
+  TypDanych varchar(100),
    INDEX par_ind (id),
     FOREIGN KEY (id)
         REFERENCES uzytkownik(id)

@@ -2,7 +2,7 @@ var Identyfikator_uzytkownik = -1;
 var Nazwa_uzytkownik = "";
 
 
-function Zaloguj(email_ = '', haslo_ = '')
+function Zaloguj(email_ = '', haslo_ = '', odczytajParametry = true)
 {
 	var email = $("#lemail").val();
 	var haslo = $("#lhaslo").val();
@@ -29,7 +29,8 @@ function Zaloguj(email_ = '', haslo_ = '')
 			{			
 				ZapiszDoLS(email, haslo);
 			}
-			OdczytajParametry();
+			//if (odczytajParametry) OdczytajParametry();
+			DBOdczytajParametryKW();
 		}
 	});
 };		  
@@ -128,6 +129,7 @@ function DBZapiszParametryKW()
 		param.OkresCzasowyStopProc = 'NULL';
 		param.WartoscStopProc = $scope.InterestRate;
 	}	
+	param.TypDanych = TypDanych; 
 	var paramJSON = JSON.stringify(param);  	
 	
 	$.post("baza.php",{ operacja_: "SetParamsKW", paramKW_: paramJSON},
@@ -157,6 +159,18 @@ function DBOdczytajParametryKW()
 			$scope.Currency = param.WalutaKredytu;
 			$scope.RateTime = param.OkresCzasowyStopProc;
 			$scope.InterestRate = param.WartoscStopProc;
+			
+			if (param.TypDanych == "0")
+			{
+				$('a[href="#calculationTab"]').click();
+				$scope.calculateInstallment();
+			}
+			else
+			{
+				$('a[href="#comparisonTab"]').click();
+				$scope.CompareCreditOffers();
+			}
+			
 			$scope.$apply();
 		}
 	});	
