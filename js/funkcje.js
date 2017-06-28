@@ -106,8 +106,8 @@ var TypDanych = 0;
     };
 
     $scope.calculateFixedInstallmentScheduleWithBenefitsAction = function () {
+		$scope.btnPDFSHow = true;
       var interestRate;
-      $scope.btnPDFSHow = false;
       if ($scope.showAutomateRatioParameters === "InterestRateYes") {
         interestRate = GetInterestRateFromApi($scope.RateTime, $scope.Currency);
       }
@@ -158,8 +158,13 @@ var TypDanych = 0;
 	$scope.PrintToPdfWgDanychApi = function () {
       PrintPDF(1);
     }	
-    $scope.DBLogowanie = function () {
+    $scope.DBLogowanie = function () {	
+	  if ($('#flogowanie').validator('validate').has('.has-error').length) { return; }
       Zaloguj();
+    }
+	$scope.DBZapis = function () {	
+	  if ($('#fzapis').validator('validate').has('.has-error').length) { return; }
+      Zarejestruj();
     }
     $scope.SaveParameters = function () {
 	  TypDanych = 0;

@@ -14,6 +14,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
 	<link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+	<script src="http://1000hz.github.io/bootstrap-validator/dist/validator.min.js"></script>
 
 
 	<link href="css/style.css" rel="stylesheet">
@@ -81,17 +82,19 @@
 									<div class="tab-content">
 										<br>
 										<div class="tab-pane active" id="Login">
-											<form role="form" class="form-horizontal">
+											<form role="form" class="form-horizontal" id = "flogowanie" >
 												<div class="form-group">
 													<label for="lemail" class="col-sm-2 control-label">Email</label>
 													<div class="col-sm-10">
-														<input type="email" class="form-control" id="lemail" placeholder="Email" />
+														<input type="email" class="form-control" id="lemail" placeholder="Email" data-error="Niepoprawny adres email" required />
+														<div class="help-block with-errors"></div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="lhaslo" class="col-sm-2 control-label">Hasło</label>
 													<div class="col-sm-10">
-														<input type="password" class="form-control" id="lhaslo" placeholder="Hasło" />
+														<input type="password" class="form-control" id="lhaslo" placeholder="Hasło" data-error="Hasło nie może być puste" required />
+														<div class="help-block with-errors"></div>
 													</div>
 												</div>
 												<div class="checkbox">
@@ -102,29 +105,32 @@
 													<div class="col-sm-2">
 													</div>
 													<div class="col-sm-10">
-														<button type="button" class="btn btn-primary btn-sm" id="btnLoguj" ng-click="DBLogowanie()">Zaloguj</button>
+														<button type="submit" class="btn btn-primary btn-sm" id="btnLoguj" ng-click="DBLogowanie()">Zaloguj</button>
 													</div>
 												</div>
 											</form>
 										</div>
 										<div class="tab-pane" id="Registration">
-											<form role="form" class="form-horizontal">
+											<form role="form" class="form-horizontal" id = "fzapis">
 												<div class="form-group">
 													<label for="rnazwa" class="col-sm-2 control-label">Nazwa</label>
 													<div class="col-sm-10">
-														<input type="text" class="form-control" id="rnazwa" placeholder="Nazwa" />
+														<input type="text" class="form-control" id="rnazwa" placeholder="Nazwa" data-error="Nazwa nie może być pusta" required />
+														<div class="help-block with-errors"></div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="remail" class="col-sm-2 control-label">Email</label>
 													<div class="col-sm-10">
-														<input type="email" class="form-control" id="remail" placeholder="Email" />
+														<input type="email" class="form-control" id="remail" placeholder="Email" data-error="Niepoprawny adres email" required/>
+														<div class="help-block with-errors"></div>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="rhaslo" class="col-sm-2 control-label">Hasło</label>
 													<div class="col-sm-10">
-														<input type="password" class="form-control" id="rhaslo" placeholder="Hasło" />
+														<input type="password" class="form-control" id="rhaslo" placeholder="Hasło" data-error="Hasło nie może być puste" required />
+														<div class="help-block with-errors"></div>
 													</div>
 												</div>
 												<div class="checkbox">
@@ -135,7 +141,7 @@
 													<div class="col-sm-2">
 													</div>
 													<div class="col-sm-10">
-														<button type="button" class="btn btn-primary btn-sm" id="btnZarejestruj">Zapisz</button>
+														<button type="submit" class="btn btn-primary btn-sm" id="btnZarejestruj" ng-click="DBZapis()">Zapisz</button>
 														<button type="button" class="btn btn-default btn-sm" id="btnAnuluj" data-dismiss="modal">Anuluj</button>
 													</div>
 												</div>
@@ -410,9 +416,7 @@
 		<p>Krzysztof Gieroń</p>
 	</footer>
 
-	<script>
-		$("#btnZarejestruj").click(function () { Zarejestruj(); });
-		
+	<script>	
 
 	</script>
 	</div>
