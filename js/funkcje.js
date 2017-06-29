@@ -48,6 +48,7 @@ var TypDanych = 0;
 
     OdczytajParametry(false); 
     $scope.CompareCreditOffers = function () {
+	  if ($('#foblicz2').validator('validate').has('.has-error').length) { return; }
       var comparedCredits = CompareCreditOffers($scope.creditAmount, $scope.estateValue, $scope.creditTime);
       drawComparisonResultTable(comparedCredits);
 	  globalComparedCredits = comparedCredits;
@@ -55,6 +56,7 @@ var TypDanych = 0;
     }
 
     $scope.calculateInstallment = function () {
+	  if ($('#foblicz1').validator('validate').has('.has-error').length) { return; }
       var interestRate;
       $scope.btnPDFSHow = false;
       if ($scope.showAutomateRatioParameters === "InterestRateYes") {
@@ -167,11 +169,13 @@ var TypDanych = 0;
       Zarejestruj();
     }
     $scope.SaveParameters = function () {
+	  if ($('#foblicz1').validator('validate').has('.has-error').length) { return; }
 	  TypDanych = 0;
       if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();
       else DBZapiszParametryKW();
     }
 	$scope.SaveParametersWgApi = function () {
+	  if ($('#foblicz2').validator('validate').has('.has-error').length) { return; }
 	  TypDanych = 1;
       if (Identyfikator_uzytkownik == -1) ZapiszParametryDoLS();
       else DBZapiszParametryKW();

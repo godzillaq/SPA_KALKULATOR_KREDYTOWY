@@ -176,14 +176,15 @@
 			</div>
 			<div id="my-tab-content" class="tab-content">
 				<div class="tab-pane active" id="calculationTab">
-					<form class="form-horizontal">
+					<form class="form-horizontal" id = "foblicz1">
 						<fieldset class="calculationTabClass">
 
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Kwota kredytu</label>
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="creditAmount">
+									<input id="textinput" name="textinput" type="textinput" class="form-control input-md" ng-model="creditAmount" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -191,7 +192,8 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Wartość nieruchomości</label>
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="estateValue">
+									<input id="textinput" name="textinput" type="textinput" class="form-control input-md" ng-model="estateValue" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -207,7 +209,8 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Marża</label> %
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="spread">
+									<input id="textinput" name="textinput" type="textinput" class="form-control input-md" ng-model="spread" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -215,7 +218,8 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Prowizja</label> %
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="commision">
+									<input id="textinput" name="textinput" type="textinput" class="form-control input-md" ng-model="commision" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -320,8 +324,8 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-4 col-md-offset-4">
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateInstallment()">Oblicz!</button>
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParameters()">Zapisz parametry</button>
+									<button type = "submit" id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateInstallment()">Oblicz!</button>
+									<button type = "submit" id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParameters()">Zapisz parametry</button>
 									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="PrintToPdfWgWlasnychDanych()" ng-show="btnPDFSHow">Zapisz do pdf</button>
 								</div>
 							</div>
@@ -361,14 +365,15 @@
 </div>
 		</div>
 				<div class="tab-pane" id="comparisonTab">
-					<form class="form-horizontal">
+					<form class="form-horizontal" id = "foblicz2">
 						<fieldset class="calculationTabClass">
 
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Kwota kredytu</label>
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="creditAmount">
+									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="creditAmount" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -376,7 +381,8 @@
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Wartość nieruchomości</label>
 								<div class="col-md-4">
-									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="estateValue">
+									<input id="textinput" name="textinput" type="text" class="form-control input-md" ng-model="estateValue" data-error="Wartość nie może być pusta" required>
+									<div class="help-block with-errors"></div>
 								</div>
 							</div>
 
@@ -391,8 +397,8 @@
 							<!-- Button -->
 							<div class="form-group">
 								<div class="col-md-4 col-md-offset-4">
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="CompareCreditOffers()">Porównaj!</button>
-									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParametersWgApi()">Zapisz parametry</button>
+									<button type = "submit" id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="CompareCreditOffers()">Porównaj!</button>
+									<button type = "submit" id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="SaveParametersWgApi()">Zapisz parametry</button>
 									<button id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="PrintToPdfWgDanychApi()" ng-show="btnPDFSHowWgDanychApi">Zapisz do pdf</button>
 								</div>
 						</fieldset>
