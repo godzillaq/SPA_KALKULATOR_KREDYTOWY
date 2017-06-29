@@ -72,7 +72,7 @@ var TypDanych = 0;
         scheduleWithPLN = AddPLNToEachCell(schedule);
         drawCalculationResultTable(scheduleWithPLN);
         $("#benefitCalculationButton").empty();
-        var svg = angular.element('<button style="text-align: right;" id="singlebutton" name="singlebutton" class="btn btn-primary" ng-click="calculateFixedInstallmentScheduleWithBenefitsAction()">Oblicz oszczędności!</button>');
+        var svg = angular.element('<button style="text-align: right;" id="benefitButton" name="benefitButton" class="btn btn-primary" ng-click="calculateFixedInstallmentScheduleWithBenefitsAction()">Oblicz oszczędności!</button>');
         $("#benefitCalculationButton").append(svg);
         $compile(svg)($scope);
       }
@@ -80,6 +80,7 @@ var TypDanych = 0;
         schedule = calculateVariableInstallmentSchedule(parseFloat($scope.creditAmount), combinedRate / 100, $scope.creditTime);
         scheduleWithPLN = AddPLNToEachCell(schedule);
         drawCalculationResultTable(scheduleWithPLN);
+        $("#benefitButton").hide();
       }
       var interestsInTime = GetInterestsInTime(schedule);
       var capitalInTime = GetCapitalInTime(schedule);
@@ -124,14 +125,8 @@ var TypDanych = 0;
         schedule = calculateFixedInstallmentSchedule(parseFloat($scope.creditAmount), combinedRate / 100, $scope.creditTime);
         scheduleWithBenefits = calculateFixedInstallmentScheduleWithBenefits(parseFloat($scope.creditAmount), combinedRate / 100, $scope.creditTime);
       }
-      else if ($scope.installmentType === "VariableRate") {
-        schedule = calculateVariableInstallmentSchedule(parseFloat($scope.creditAmount), combinedRate / 100, $scope.creditTime);
-        scheduleWithBenefits = calculateVariableInstallmentScheduleWithBenefits(parseFloat($scope.creditAmount), combinedRate / 100, $scope.creditTime);
-      }
       var creditSummary = GetCreditSummary($scope.creditAmount, schedule, $scope.commision, $scope.spread, interestRate, $scope.estateValue, "Kalkulacja bazowa");
       drawCalculationSummaryTable(creditSummary);
-      
-      
       
       var creditSummaryWithBenefits = GetCreditSummary($scope.creditAmount, scheduleWithBenefits, $scope.commision, $scope.spread, interestRate, $scope.estateValue, "Kalkulacja z nadpłatami");
       scheduleWithPLN = AddPLNToEachCell(scheduleWithBenefits);
@@ -441,7 +436,7 @@ function calculateFixedInstallmentScheduleWithBenefits(amount, rate, months) {
 
     if (i < months && parseFloat(overPayments[i - 1].value) > 0) {
       installmentsDetails.slice(-1).pop()[5] = parseFloat(overPayments[i - 1].value);
-      dynamicMonths = dynamicMonths - i;
+      dynamicMonths = months - i;
       dynamicAmount = remainingAmount - parseFloat(overPayments[i - 1].value);
       installment = calculateInstallment(rate, dynamicMonths, dynamicAmount);
       wasPreviousMonthWithOverpayment = true;
@@ -743,7 +738,6 @@ function GetCreditOffersFromAPI() {
   });
   return response;
 }
-
 
 $(document).ready(function () {
   generateOptions();
